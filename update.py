@@ -26,11 +26,19 @@ from optparse import OptionParser
 import netifaces as ni
 
 def setRecord(client, domain, subdomain, field, value):
-    records = client.get('/domain/zone/%s/record' % (domain), fieldType=field, subDomain=subdomain)
+    records = client.get(
+        '/domain/zone/%s/record' % (domain),
+        fieldType=field, subDomain=subdomain
+    )
     if len(records) == 0:
-        out = client.post('/domain/zone/%s/record' % (domain), fieldType=field, subDomain=subdomain, target=value, ttl=0)
+        out = client.post(
+            '/domain/zone/%s/record' % (domain),
+            fieldType=field, subDomain=subdomain, target=value, ttl=0
+        )
     else:
-        out = client.put('/domain/zone/%s/record/%d' % (domain, records[0]), target=value)
+        out = client.put(
+            '/domain/zone/%s/record/%d' % (domain, records[0]), target=value
+        )
     out2 = client.post('/domain/zone/%s/refresh' % (domain))
     return (out, out2)
 
@@ -52,10 +60,12 @@ def main():
                       help="subdomain to act on, empty for root",
                       action="store", dest="subdomain", default="")
     parser.usage = """%prog [options]"""
-    parser.description = "Updates the A and AAAA (if available) records for subdomain.domain with the IPs from interface."
+    parser.description = "Updates the A and AAAA (if available) records for" + \
+        " subdomain.domain with the IPs from interface."
 
     (options, args) = parser.parse_args()
-    interface, domain, subdomain = options.interface, options.domain, options.subdomain
+    interface, domain, subdomain = options.interface, options.domain, \
+                                   options.subdomain
 
     # OVH API
     client = ovh.Client(
