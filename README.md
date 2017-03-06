@@ -8,8 +8,8 @@ Install dependencies :
 
     pip3 install ovh netifaces
 
-Setup your OVH application keys in `sample.env`, then load it with
-`source sample.env`.
+Setup your OVH application keys in `.env` based on the contents of `sample.env`,
+then load it with `source .env`.
 
 # Run
 
@@ -20,6 +20,13 @@ Setup your OVH application keys in `sample.env`, then load it with
  - `-i` : sets the interface to take the IPs from. Ex : `eth0`
  - `-d` : main domain to update. Ex : `example.com`
  - `-s` : subdomain to update. Ex : `server`. Leave blank to update the root domain.
+
+# Cron
+
+Let's face it, you ideally want to set this up in a crontab. Here is an
+example to do nightly updates :
+
+    0 0 * * * . path/to/repo/.env path/to/repo/update.py <options>
 
 # License
 
