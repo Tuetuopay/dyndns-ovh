@@ -8,6 +8,8 @@ Install dependencies :
 
     pip3 install ovh netifaces
 
+Note that you may need the development package for python 3.
+
 Setup your OVH application keys in `.env` based on the contents of `sample.env`,
 then load it with `source .env`.
 
